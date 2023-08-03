@@ -56,7 +56,6 @@ uint8_t checksum;
 //uint8_t START_BYTE = 0xAA;
 //uint8_t END_BYTE = 0x55;
 
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -118,37 +117,29 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    
-        
-    // wait for ADC DMA transfer complete
+      
+    // Wait for ADC DMA transfer complete
     HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-    
-    
+      
     // Read ADC valur from the DMA buffer 
     adc1_ch0 = adc_value[0];
     adc1_ch1 = adc_value[1];
-    
-    
+      
     // Format ADC data for UART transmission  
     adc_data[0] = adc1_ch0 & 0xFF;
     adc_data[1] = (adc1_ch0 >> 8) & 0xFF;
     adc_data[2] = adc1_ch1 & 0xFF;
     adc_data[3] = (adc1_ch1 >> 8) & 0xFF;
 
-    
     // Calculate checksum (for example, using XOR)
     checksum = adc_data[0] ^ adc_data[1] ^ adc_data[2] ^ adc_data[3];
     
-    
     // Start UART transmission only if the previous transmission is complete
     if(HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY){
-     
       // Transmit data frame
       HAL_UART_Transmit(&huart1, adc_data, 4, 100); // Transmit ADC data           
       HAL_UART_Transmit(&huart1, &checksum, 1, 100);// Transmit checksum byte
-      
     }    
-    
   }
   /* USER CODE END 3 */
 }
