@@ -1,4 +1,4 @@
-# Stm32-DMA
+# ADC-to-UART-Data-Transmission-with-DMA
 This project demonstrates how to read data from the first two channels of ADC1 and transmit it via UART using DMA (Direct Memory Access). The microcontroller used in this project is STM32F407VGT6, and the code is written in C language using STM32CubeMX and HAL (Hardware Abstraction Layer).
 
 ## Project Description
